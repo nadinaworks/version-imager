@@ -1,19 +1,36 @@
 <?php
 $cache_life = 60; //caching time, in seconds
 $download = false;
-if (!isset($_REQUEST['url'])) {
+
+//config for each theme
+$theme_config = array (
+	'rosa' => array (
+		'dest_dir' => '../demos/rosa2/assets/',
+	),
+	'heap' => array (
+		'dest_dir' => '../demos/heap/assets/',
+	),
+	'border' => array (
+		'dest_dir' => '../demos/border/assets/',
+	),
+	'bucket' => array (
+		'dest_dir' => '../demos/bucket/assets/',
+	),
+	'lens' => array (
+		'dest_dir' => '../demos/lens/assets/',
+	),
+	'fuse' => array (
+		'dest_dir' => '../demos/fuse/assets/',
+	),
+	'senna' => array (
+		'dest_dir' => '../demos/senna/assets/',
+	),
+);
+if (!isset($_REQUEST['theme'])) {
     exit();
 }
-$url = $_REQUEST['url'];
 
-$url = trim(urldecode($url));
-if ($url == '') {
-    exit();
-}
-
-if (!stristr($url, 'http://') and !stristr($url, 'https://')) {
-    $url = 'http://' . $url;
-}
+$url = 'http://pixelgrade.com/version-imager/version-bubble.php';
 
 $url_segs = parse_url($url);
 if (!isset($url_segs['host'])) {
@@ -23,16 +40,16 @@ if (!isset($url_segs['host'])) {
 $here = dirname(__FILE__) . DIRECTORY_SEPARATOR;
 $bin_files = '/usr/local/bin' . DIRECTORY_SEPARATOR;
 $jobs = $here . 'jobs' . DIRECTORY_SEPARATOR;
-$cache = $here . 'cache' . DIRECTORY_SEPARATOR;
+$destination = $here . $theme_config[$_REQUEST['theme']]['dest_dir'];
 
 if (!is_dir($jobs)) {
     mkdir($jobs);
     file_put_contents($jobs . 'index.php', '<?php exit(); ?>');
 
 }
-if (!is_dir($cache)) {
-    mkdir($cache);
-    file_put_contents($cache . 'index.php', '<?php exit(); ?>');
+if (!is_dir($destination)) {
+    mkdir($destination);
+    file_put_contents($destination . 'index.php', '<?php exit(); ?>');
 
 }
 
@@ -81,8 +98,8 @@ if (isset($_REQUEST['content'])) {
 //add the needed params to the url
 $url = add_query_arg($url_params, $url);
 
-$screen_file = $url_segs['host'] . crc32($url) . '_' . $w . '_' . $h . '.png';
-$cache_job = $cache . $screen_file;
+$screen_file = sanitize_file_name($_REQUEST['theme'].'-update-'.str_replace('.','-',$_REQUEST['version'])).'.png';
+$cache_job = $destination . $screen_file;
 
 
 $refresh = false;
@@ -389,6 +406,67 @@ function _http_build_query($data, $prefix=null, $sep=null, $key='', $urlencode=t
 		$sep = ini_get('arg_separator.output');
 
 	return implode($sep, $ret);
+}
+
+/**
+ * Sanitizes a filename, replacing whitespace with dashes.
+ *
+ * Removes special characters that are illegal in filenames on certain
+ * operating systems and special characters requiring special escaping
+ * to manipulate at the command line. Replaces spaces and consecutive
+ * dashes with a single dash. Trims period, dash and underscore from beginning
+ * and end of filename.
+ *
+ * @since 2.1.0
+ *
+ * @param string $filename The filename to be sanitized
+ * @return string The sanitized filename
+ */
+function sanitize_file_name( $filename ) {
+	$filename_raw = $filename;
+	$special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}", chr(0));
+
+	$filename = preg_replace( "#\x{00a0}#siu", ' ', $filename );
+	$filename = str_replace($special_chars, '', $filename);
+	$filename = preg_replace('/[\s-]+/', '-', $filename);
+	$filename = trim($filename, '.-_');
+
+	// Split the filename into a base and extension[s]
+	$parts = explode('.', $filename);
+
+	// Return if only one extension
+	if ( count( $parts ) <= 2 ) {
+		return $filename;
+	}
+
+	// Process multiple extensions
+	$filename = array_shift($parts);
+	$extension = array_pop($parts);
+	$mimes = get_allowed_mime_types();
+
+	/*
+	 * Loop over any intermediate extensions. Postfix them with a trailing underscore
+	 * if they are a 2 - 5 character long alpha string not in the extension whitelist.
+	 */
+	foreach ( (array) $parts as $part) {
+		$filename .= '.' . $part;
+
+		if ( preg_match("/^[a-zA-Z]{2,5}\d?$/", $part) ) {
+			$allowed = false;
+			foreach ( $mimes as $ext_preg => $mime_match ) {
+				$ext_preg = '!^(' . $ext_preg . ')$!i';
+				if ( preg_match( $ext_preg, $part ) ) {
+					$allowed = true;
+					break;
+				}
+			}
+			if ( !$allowed )
+				$filename .= '_';
+		}
+	}
+	$filename .= '.' . $extension;
+
+	return $filename;
 }
 
  

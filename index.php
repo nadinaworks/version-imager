@@ -17,10 +17,29 @@
 		<fieldset>
 			<legend>Make a new version bubble image</legend>
 			<div class="form-group">
-				<label for="date">Choose date</label>
-				<input type="text" class="form-control" id="datepicker" name="date">
-				<label for="version">Version (like 1.4.2)</label>
-				<input type="text" class="form-control" name="version">
+				<div class="row">
+					<div class="col-md-4">
+						<label for="theme">Choose theme</label>
+						<select class="form-control" id="theme" name="theme">
+							<option>Select Theme</option>
+							<option value="rosa">Rosa</option>
+							<option value="heap">Heap</option>
+							<option value="bucket">Bucket</option>
+							<option value="border">Border</option>
+							<option value="lens">Lens</option>
+							<option value="fuse">Fuse</option>
+							<option value="senna">Senna</option>
+						</select>
+					</div>
+					<div class="col-md-4">
+						<label for="date">Choose date</label>
+						<input type="text" class="form-control" id="datepicker" name="date" autocomplete="off">
+					</div>
+					<div class="col-md-4">
+						<label for="version">Version (like 1.4.2)</label>
+						<input type="text" class="form-control" name="version" autocomplete="off">
+					</div>
+				</div>
 				<label for="content">Content (HTML allowed)</label>
 				<textarea rows="3" class="form-control" name="content"></textarea>
 				<div class="checkbox">
@@ -29,7 +48,6 @@
 					</label>
 				  </div>
 				</div>
-				<input type="hidden" value="http://pixelgrade.com/version_screenshot/version-bubble.php" name="url">
 				<input type="hidden" value="616" name="w">
 				<input type="hidden" value="71" name="h">
 			<button type="submit" class="btn btn-default">Fire it up!</button>
