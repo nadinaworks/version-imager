@@ -8,12 +8,16 @@
   <title>Theme Forest Version Bubble</title>
   
   <style type="text/css">
-    .update-bar {
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,400italic,100,100italic,300,300italic,500italic,500,700,700italic,900,900italic);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,700,300);
+.update-bar {
     position:relative; 
+    max-width: 616px;
     
     color: white;
     font-family: sans-serif;
     font-weight:300;
+    font-family: 'Roboto', sans-serif;
     
     background-color: #2e302f;
     
@@ -41,10 +45,11 @@
 }
 
 ul {
-    padding: 12px 18px;
+    padding: 9px 18px;
 }
 
 li {
+    position:relative;
     display: inline-block;
     list-style: none;
     margin: 0;
@@ -52,24 +57,62 @@ li {
 }
 
 li.version {
-    width: 15%;
+    width: 12%;
     font-size: 28px;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 li.date {
-    width: 10%;
-}
+    top: -3px;
+    width: 13%;
 
+    font-size: 28px;
+    line-height: 1.1;
+}
+    .day {
+        float: left;
+        margin-right: 6px;
+        letter-spacing: -3px;
+    }
+    .month, .year {
+        position:relative;
+        top:2px;
+
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+    .year {
+        color: #828282;
+    }
 li.description {
-    width: 60%;
+    top:2px;
+    width: 62%;
+
+    font-size: 14px;
 }
 
 li.changelog {
+    top: 6px;
+    right: 3px;
     width: 10%;
     float:right;
     
     font-size: 11px;
     text-transform: uppercase;
+}
+
+.small {
+    font-size: 60%;
+}
+
+em {
+    font-style: normal;
+    color: #07d3f8;
+    font-weight: 400;
+}
+
+.muted {
+    color: #828282;
 }
 
 * { 
@@ -89,9 +132,9 @@ if (isset($_REQUEST['version'])) {
     $version_s = substr($temp, strrpos($temp,'.')+1);
 }
 
-$day = '01';
-$month = 'JAN';
-$year = '1971';
+$day = '16';
+$month = 'Aug';
+$year = '2014';
 if (isset($_REQUEST['date'])) {
 	$date = DateTime::createFromFormat('m/d/Y',urldecode($_REQUEST['date']));
 	
@@ -100,7 +143,7 @@ if (isset($_REQUEST['date'])) {
 	$year = $date->format('Y');
     
 }
-$content = 'Some content!';
+$content = 'Added <em>WooCommerce</em> support, NEW Theme Options panel, bordered layout and waves edges option.';
 if (isset($_REQUEST['content'])) {
     $content = urldecode($_REQUEST['content']);
 }
