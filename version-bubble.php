@@ -88,7 +88,7 @@ li.description {
     top:2px;
     width: 62%;
 
-    font-size: 14px;
+    font-size: 13px;
 }
 
 li.changelog {
@@ -102,7 +102,7 @@ li.changelog {
 }
 
 .small {
-    font-size: 60%;
+    font-size: 65%;
 }
 
 em {
