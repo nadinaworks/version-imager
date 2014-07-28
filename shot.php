@@ -26,6 +26,7 @@ $theme_config = array (
 		'dest_dir' => '../demos/senna/assets/',
 	),
 );
+
 if (!isset($_REQUEST['theme'])) {
     exit();
 }
