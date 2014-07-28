@@ -86,7 +86,7 @@ li.date {
     }
 li.description {
     top:2px;
-    width: 62%;
+    width: 61%;
 
     font-size: 13px;
 }
@@ -105,8 +105,7 @@ li.changelog {
     font-size: 65%;
 }
 
-em {
-    font-style: normal;
+b {
     color: #07d3f8;
     font-weight: 400;
 }
@@ -143,7 +142,7 @@ if (isset($_REQUEST['date'])) {
 	$year = $date->format('Y');
     
 }
-$content = 'Added <em>WooCommerce</em> support, NEW Theme Options panel, bordered layout and waves edges option.';
+$content = 'Added <b>WooCommerce</b> support, NEW Theme Options panel, bordered layout and waves edges option.';
 if (isset($_REQUEST['content'])) {
     $content = urldecode($_REQUEST['content']);
 }

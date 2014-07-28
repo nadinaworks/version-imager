@@ -8,6 +8,57 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+
+
+<style type="text/css">
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,500italic,500,700,700italic);
+.update-bar {
+    position:relative; 
+    max-width: 394px;
+    margin-bottom: 12px;
+    padding: 12px 20px;
+    
+    color: white;
+    font-family: sans-serif;
+    font-weight:300;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    
+    background-color: #2e302f;
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    
+    -webkit-box-shadow: 0 4px 0 0 #000000;
+    box-shadow: 0 4px 0 0 #000000;
+}
+
+.update-bar.medium-editor-placeholder:after{
+	top: 12px;
+	left: 20px;
+}
+
+.update-bar p {
+	margin-bottom: 0;
+}
+
+b {
+    color: #07d3f8;
+    font-weight: 400;
+}
+
+.muted {
+    color: #828282;
+}
+
+* { 
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+  </style>
+
 </head>
 
 <body>
@@ -41,6 +92,7 @@
 					</div>
 				</div>
 				<label for="content">Content (HTML allowed)</label>
+				<div class="editable update-bar"></div>
 				<textarea rows="3" class="form-control" name="content"></textarea>
 				<div class="checkbox">
 					<label>
@@ -65,10 +117,19 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+<!--  MediumEditor -->
+<link rel="stylesheet" href="css/medium-editor.min.css">
+<link rel="stylesheet" href="css/default.min.css">
+<script src="js/medium-editor.min.js"></script>
  
 <script>
 $(function() {
 $( "#datepicker" ).datepicker();
+var editor = new MediumEditor('.editable', {
+	anchorInputPlaceholder: 'Type a link',
+	buttons: ['bold'],
+});
 });
 </script>
   
