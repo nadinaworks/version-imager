@@ -64,7 +64,7 @@ b {
 <body>
 <div class="container">
 	<h1>Version Bubblinator Creatooooaaar</h1>
-	<form target="shot"  action="shot.php"   method="post">
+	<form id="mainform" target="shot" action="shot.php" method="post">
 		<fieldset>
 			<legend>Make a new version bubble image</legend>
 			<div class="form-group">
@@ -92,8 +92,8 @@ b {
 					</div>
 				</div>
 				<label for="content">Content (HTML allowed)</label>
-				<div class="editable update-bar"></div>
-				<textarea rows="3" class="form-control" name="content"></textarea>
+				<div class="editable update-bar" id="visible-content"></div>
+				<textarea rows="3" class="form-control hidden" id="content" name="content"></textarea>
 				<div class="checkbox">
 					<label>
 					  <input type="checkbox" name="download"> Also download generated image?
@@ -125,11 +125,17 @@ b {
  
 <script>
 $(function() {
-$( "#datepicker" ).datepicker();
-var editor = new MediumEditor('.editable', {
-	anchorInputPlaceholder: 'Type a link',
-	buttons: ['bold'],
-});
+	$( "#datepicker" ).datepicker();
+	var editor = new MediumEditor('.editable', {
+		anchorInputPlaceholder: 'Type a link',
+		buttons: ['bold'],
+	});
+
+	$( "#mainform" ).submit(function( event ) {
+		value = $('#visible-content').html();
+		$("#content").val(value);
+	});
+
 });
 </script>
   
