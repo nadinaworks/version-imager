@@ -153,7 +153,7 @@ if (isset($_REQUEST['content'])) {
 <body>
   <div class="update-bar">
     <ul>
-        <li class="version">v<?php echo $version ?>.<span class="small"><?php echo $version_s ?></span></li>
+        <li class="version"><span class="small">v</span><?php echo $version ?>.<span class="small"><?php echo $version_s ?></span></li>
         <li class="date">
             <span class="day"><?php echo $day ?></span>
             <span class="month"><?php echo $month ?></span>
